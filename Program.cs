@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using HSM;
 
+MenuOptions menuOptions = new();
 List<User> users = new();
 
 users.Add(new User("test", "test"));
@@ -14,6 +15,7 @@ while (running)
 {
     if (activeUser == null)
     {
+        try { Console.Clear(); } catch { }
         Console.Write("Enter your username:");
         string? usernameInput = Console.ReadLine();
         Debug.Assert(usernameInput != null);
@@ -23,6 +25,7 @@ while (running)
 
         if (string.IsNullOrWhiteSpace(usernameInput) || string.IsNullOrWhiteSpace(passwordInput))
         {
+            try{Console.Clear();}catch{}
             System.Console.WriteLine("Invalid Input");
             Console.Write("Press Enter");
             Console.ReadLine();
@@ -33,12 +36,13 @@ while (running)
     }
     else
     {
+        try{Console.Clear();}catch{}
         Dictionary<string, EmployPermissions> LoggedinMenu = new();
         int index = 1;
         foreach (EmployPermissions em_per in activeUser.Permissions)
         {
             LoggedinMenu[index.ToString()] = em_per;
-            string MenuText = $"[{index}] - ";
+            string MenuText = $"[{index}] - {em_per}";
 
             switch (em_per)
             {
@@ -60,14 +64,28 @@ while (running)
         switch (LoggedinMenu[menuInput])
         {
             case EmployPermissions.Baseemply:
+                System.Console.WriteLine("Emply menu");
+                Console.ReadLine();
                 break;
             case EmployPermissions.Management:
+                System.Console.WriteLine("Management menu");
+                Console.ReadLine();
                 break;
             case EmployPermissions.Admin:
+                System.Console.WriteLine("Admin menu:");
+                switch (Console.ReadLine())
+                {
+                    case "1":
+                        menuOptions.ChangePermissions(activeUser.Permissions, users);
+                        break;
+                }
+                Console.ReadLine();
                 break;
             case EmployPermissions.Logout:
+                activeUser = null;
                 break;
             case EmployPermissions.Quit:
+                running = false;
                 break;
             default:
                 break;
