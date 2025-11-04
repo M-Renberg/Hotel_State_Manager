@@ -1,11 +1,8 @@
 namespace HSM;
 
-{
-    enum EmployPermissions
+enum EmployPermissions
 {
     Baseemply,
     Management,
     Admin,
-
-}
 }
