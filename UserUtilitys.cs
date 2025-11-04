@@ -5,4 +5,6 @@ enum EmployPermissions
     Baseemply,
     Management,
     Admin,
+    Logout,
+    Quit,
 }
