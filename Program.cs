@@ -8,6 +8,8 @@ List<User> users = new();
 users.Add(new User("test", "test"));
 users[0].Permissions.Add(EmployPermissions.Admin);
 
+
+
 User? activeUser = null;
 
 bool running = true;
@@ -77,8 +79,8 @@ while (running)
                 System.Console.WriteLine("|                       |");
                 System.Console.WriteLine("|[1] Change Permissions |");
                 System.Console.WriteLine("|[2] Create new employ  |");
-                System.Console.WriteLine("");
-                System.Console.WriteLine("");
+                System.Console.WriteLine("|[3] Hotel Setup        |");
+                System.Console.WriteLine("+-----------------------+");
                 switch (Console.ReadLine())
                 {
                     case "1":
@@ -88,6 +90,10 @@ while (running)
                     case "2":
                         ClearText();
                         menuOptions.CreateNewUser();
+                        break;
+                    case "3":
+                        ClearText();
+                        menuOptions.HotelRoomSetup();
                         break;
                 }
                 Console.ReadLine();

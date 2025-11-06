@@ -1,9 +1,17 @@
 using System.Diagnostics;
+using System.Globalization;
+using System.Security.Cryptography.X509Certificates;
 
 namespace HSM;
 
+
+
 class MenuOptions
 {
+
+    public HotelRoom[][]? Hotel;
+
+
     public void ChangePermissions(List<EmployPermissions> permissions, List<User> users)
     {
         foreach (User user in users)
@@ -151,5 +159,58 @@ class MenuOptions
         }
 
     }
-    
+
+    public void HotelRoomSetup()
+    {
+        System.Console.WriteLine("Hotel setup:");
+        System.Console.WriteLine("[1] Setup a new Hotel");
+        System.Console.WriteLine("[2] View current hotel");
+        System.Console.WriteLine("[3] Edit current Hotel");
+        System.Console.WriteLine("[4] FAQ");
+        System.Console.WriteLine("[5] Exit");
+        string? hsSelect = Console.ReadLine();
+        Debug.Assert(hsSelect != null);
+        switch (hsSelect)
+        {
+            case "1":
+                System.Console.WriteLine("How many floors are the hotel?");
+                System.Console.WriteLine("Do now include the ground floor");
+                int floors = int.Parse(Console.ReadLine()!);
+                Hotel = new HotelRoom[floors][];
+
+                for (int i = 0; i < Hotel.Length; i++)
+                {
+                    System.Console.WriteLine($"How many rooms do you want floor {i} to have?");
+                    int rooms = int.Parse(Console.ReadLine()!);
+                    
+                    Hotel[i] = new HotelRoom[rooms];
+                }
+                break;
+            case "2":
+                if(Hotel == null)
+                {
+                    System.Console.WriteLine("You have not created a hotel yet.");
+                    Console.ReadLine();
+                }
+                else
+                {
+                for (int floor = 0; floor < Hotel.Length; floor++)
+                {
+                    System.Console.WriteLine($"Floor {floor}: {Hotel[floor].Length} rooms");   
+                }    
+                }
+                
+                Console.ReadLine();
+                break;
+            case "3":
+                break;
+            case "4":
+                break;
+            case "5":
+                break;
+            default:
+                break;
+        }
+    }
+
 }
