@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using HSM;
 
 MenuOptions menuOptions = new();
@@ -15,17 +16,17 @@ while (running)
 {
     if (activeUser == null)
     {
-        try { Console.Clear(); } catch { }
-        Console.Write("Enter your username:");
+        ClearText();
+        Console.Write("Enter your username: ");
         string? usernameInput = Console.ReadLine();
         Debug.Assert(usernameInput != null);
-        Console.Write("Enter you password");
+        Console.Write("Enter you password: ");
         string? passwordInput = Console.ReadLine();
         Debug.Assert(passwordInput != null);
 
         if (string.IsNullOrWhiteSpace(usernameInput) || string.IsNullOrWhiteSpace(passwordInput))
         {
-            try{Console.Clear();}catch{}
+            try { Console.Clear(); } catch { }
             System.Console.WriteLine("Invalid Input");
             Console.Write("Press Enter");
             Console.ReadLine();
@@ -36,7 +37,8 @@ while (running)
     }
     else
     {
-        try{Console.Clear();}catch{}
+        ClearText();
+        System.Console.WriteLine($"Welcome {activeUser.Username}");
         Dictionary<string, EmployPermissions> LoggedinMenu = new();
         int index = 1;
         foreach (EmployPermissions em_per in activeUser.Permissions)
@@ -44,12 +46,6 @@ while (running)
             LoggedinMenu[index.ToString()] = em_per;
             string MenuText = $"[{index}] - {em_per}";
 
-            switch (em_per)
-            {
-                case EmployPermissions.Baseemply:
-                    MenuText += "Welcome to the HSM menu:";
-                    break;
-            }
             System.Console.WriteLine(MenuText);
             index += 1;
         }
@@ -63,20 +59,35 @@ while (running)
         Debug.Assert(menuInput != null);
         switch (LoggedinMenu[menuInput])
         {
-            case EmployPermissions.Baseemply:
-                System.Console.WriteLine("Emply menu");
+            case EmployPermissions.Menu:
+                ClearText();
+                System.Console.WriteLine("Menu");
                 Console.ReadLine();
                 break;
             case EmployPermissions.Management:
+                ClearText();
                 System.Console.WriteLine("Management menu");
                 Console.ReadLine();
                 break;
             case EmployPermissions.Admin:
-                System.Console.WriteLine("Admin menu:");
+                ClearText();
+                System.Console.WriteLine("+-----------------------+");
+                System.Console.WriteLine("|       Admin menu:     |");
+                System.Console.WriteLine("+-----------------------+");
+                System.Console.WriteLine("|                       |");
+                System.Console.WriteLine("|[1] Change Permissions |");
+                System.Console.WriteLine("|[2] Create new employ  |");
+                System.Console.WriteLine("");
+                System.Console.WriteLine("");
                 switch (Console.ReadLine())
                 {
                     case "1":
+                        ClearText();
                         menuOptions.ChangePermissions(activeUser.Permissions, users);
+                        break;
+                    case "2":
+                        ClearText();
+                        menuOptions.CreateNewUser();
                         break;
                 }
                 Console.ReadLine();
@@ -91,4 +102,9 @@ while (running)
                 break;
         }
     }
+}
+
+static void ClearText()
+{
+    try { Console.Clear(); } catch { }
 }

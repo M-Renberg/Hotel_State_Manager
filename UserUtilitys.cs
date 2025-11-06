@@ -2,7 +2,7 @@ namespace HSM;
 
 enum EmployPermissions
 {
-    Baseemply,
+    Menu,
     Management,
     Admin,
     Logout,

@@ -5,6 +5,7 @@ class User
     public string? Username;
     public string? Password;
     public List<EmployPermissions> Permissions = new();
+    public List<ContactInfo> userContactInfo = new();
 
     public User(string username, string password)
     {

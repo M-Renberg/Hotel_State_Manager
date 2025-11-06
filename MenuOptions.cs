@@ -1,62 +1,155 @@
+using System.Diagnostics;
+
 namespace HSM;
 
 class MenuOptions
 {
-    
-
-
-
-
-
-
     public void ChangePermissions(List<EmployPermissions> permissions, List<User> users)
     {
-        
-                foreach(User user in users)
-                {
-                    Console.WriteLine($"[{user.Username}]");
-                }
-                Console.WriteLine("------------------");
-                Console.Write("Username: ");
-                string? username = Console.ReadLine();
-                //Debug.Assert(ssn != null);
-                User? user_edit = users.Find(u => u.Username == username);
-                if(user_edit != null)
-                {
-                    bool editing = true;
-                    while(editing)
-                    {
+        foreach (User user in users)
+        {
+            Console.WriteLine($"[{user.Username}]");
+        }
+        Console.WriteLine("------------------");
+        Console.Write("Username: ");
+        string? username = Console.ReadLine();
+        //Debug.Assert(ssn != null);
+        User? user_edit = users.Find(u => u.Username == username);
+        if (user_edit != null)
+        {
+            bool editing = true;
+            while (editing)
+            {
                 Console.Clear();
-                        Console.WriteLine($"{user_edit.Username}'s permissions");
-                        EmployPermissions[] permissions_all = Enum.GetValues<EmployPermissions>();
-                        int option_max_num = 0;
-                        for(int i = 0; i < permissions_all.Length; ++i)
-                        {
-                            EmployPermissions permissions1 = permissions_all[i];
-                            if(permissions1 != EmployPermissions.Logout && permissions1 != EmployPermissions.Quit)
-                            {
-                                Console.WriteLine($"[{i + 1}] - {permissions1} \t is allowed: {user_edit.PermissionLevel(permissions1)}");
-                                option_max_num += 1;
-                            }
-                        }
-                        Console.WriteLine($"[1 - {option_max_num}] - toggle the permission");
-                        Console.WriteLine("[f] - finish editing");
-                        string? selected_option = Console.ReadLine();
-                        //Debug.Assert(selected_option != null);
-                        if(selected_option == "f")
-                        {
-                            editing = false;
-                        }
-                        else if(int.TryParse(selected_option, out int selected_index))
-                        {
-                            EmployPermissions permissions2 = permissions_all[selected_index - 1];
-                            if(permissions2 != EmployPermissions.Logout && permissions2 != EmployPermissions.Quit)
-                            {
-                                user_edit.PermissionToggle(permissions2);
-                            }
-                        }
+                Console.WriteLine($"{user_edit.Username}'s permissions");
+                EmployPermissions[] permissions_all = Enum.GetValues<EmployPermissions>();
+                int option_max_num = 0;
+                for (int i = 0; i < permissions_all.Length; ++i)
+                {
+                    EmployPermissions permissions1 = permissions_all[i];
+                    if (permissions1 != EmployPermissions.Logout && permissions1 != EmployPermissions.Quit)
+                    {
+                        Console.WriteLine($"[{i + 1}] - {permissions1} \t is allowed: {user_edit.PermissionLevel(permissions1)}");
+                        option_max_num += 1;
+                    }
+                }
+                Console.WriteLine($"[1 - {option_max_num}] - toggle the permission");
+                Console.WriteLine("[f] - finish editing");
+                string? selected_option = Console.ReadLine();
+                //Debug.Assert(selected_option != null);
+                if (selected_option == "f")
+                {
+                    editing = false;
+                }
+                else if (int.TryParse(selected_option, out int selected_index))
+                {
+                    EmployPermissions permissions2 = permissions_all[selected_index - 1];
+                    if (permissions2 != EmployPermissions.Logout && permissions2 != EmployPermissions.Quit)
+                    {
+                        user_edit.PermissionToggle(permissions2);
                     }
                 }
             }
+        }
+    }
+
+    public void CreateNewUser()
+    {
+        System.Console.WriteLine("+---------------------+");
+        System.Console.WriteLine("|  Create new employ  |");
+        System.Console.WriteLine("+---------------------+");
+        System.Console.WriteLine("|                     |");
+        System.Console.WriteLine("|  Enter first name:  |");
+        System.Console.WriteLine("+---------------------+");
+        Console.Write("        ");
+        string? newFirstName = Console.ReadLine();
+        Debug.Assert(newFirstName != null);
+        System.Console.WriteLine("|                     |");
+        System.Console.WriteLine("|  Enter last name:   |");
+        Console.Write("        ");
+        string? newLastName = Console.ReadLine();
+        Debug.Assert(newLastName != null);
+        System.Console.WriteLine("+---------------------+");
+        System.Console.WriteLine("|                     |");
+        System.Console.WriteLine("|  Enter birthday:    |");
+        Console.Write("        ");
+        string? newBirstday = Console.ReadLine();
+        Debug.Assert(newBirstday != null);
+        System.Console.WriteLine("+---------------------+");
+        System.Console.WriteLine("|                     |");
+        System.Console.WriteLine("|  Enter adress:      |");
+        Console.Write("        ");
+        string? newAdress = Console.ReadLine();
+        Debug.Assert(newAdress != null);
+        System.Console.WriteLine("+---------------------+");
+        System.Console.WriteLine("|                     |");
+        System.Console.WriteLine("|  Enter email:       |");
+        Console.Write("        ");
+        string? newEmail = Console.ReadLine();
+        Debug.Assert(newEmail != null);
+        System.Console.WriteLine("+---------------------+");
+        System.Console.WriteLine("|                     |");
+        System.Console.WriteLine("|  Enter phonenumber  |");
+        Console.Write("        ");
+        string? newPhonenumber = Console.ReadLine();
+        Debug.Assert(newPhonenumber != null);
+        System.Console.WriteLine("+---------------------+");
+        Console.ReadLine();
+
+        string newUsernameNumbers = "";
+        Random rnd = new();
+        string numbers = "1234567890";
+        for (int i = 0; i < 4; i++)
+        {
+            newUsernameNumbers += numbers[rnd.Next(0, numbers.Length - 1)];
+        }
+        string? newUsername = newFirstName + newUsernameNumbers;
+
+        System.Console.WriteLine("|                     |");
+        System.Console.WriteLine("|  Employ username:   |");
+        System.Console.WriteLine($"|  {newUsername}      |");
+        System.Console.WriteLine("|                     |");
+        System.Console.WriteLine("+---------------------+");
+        string? newPassword = newLastName;
+        System.Console.WriteLine("|                     |");
+        System.Console.WriteLine("|  Employ password:   |");
+        System.Console.WriteLine($"|  {newPassword}      |");
+        System.Console.WriteLine("|                     |");
+        System.Console.WriteLine("+---------------------+");
+        System.Console.WriteLine("|  [Y] to confime     |");
+        System.Console.WriteLine("|  [N] to Cancel      |");
+        System.Console.WriteLine("+---------------------+");
+        string? ynSelect = Console.ReadLine();
+        ynSelect = ynSelect!.ToUpper();
+        switch (ynSelect)
+        {
+            case "Y":
+
+                if (int.TryParse(newBirstday, out int newBirstdayInt) && int.TryParse(newPhonenumber, out int newPhonenumberInt))
+                {
+                    User newUser = new User(newUsername, newPassword!);
+                    newUser.userContactInfo.Add(new ContactInfo(newFirstName, newLastName, newBirstdayInt, newAdress, newEmail, newPhonenumberInt));
+                    newUser.Permissions.Add(EmployPermissions.Menu);
+                }
+                else
+                {
+                    System.Console.WriteLine("Something went wrong");
+                    System.Console.WriteLine("Please try again");
+                    Console.ReadLine();
+                    break;
+                }
+                break;
+            case "N":
+                System.Console.Write("Press ENTER to cancel");
+                Console.ReadKey();
+                break;
+            default:
+                System.Console.WriteLine("Somthing went wrong please try again later");
+                System.Console.Write("Press ENTER to continue:");
+                Console.ReadKey();
+                break;
+        }
+
+    }
     
 }
