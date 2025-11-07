@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Diagnostics;
 using System.Globalization;
 using System.Security.Cryptography.X509Certificates;
@@ -162,55 +163,161 @@ class MenuOptions
 
     public void HotelRoomSetup()
     {
-        System.Console.WriteLine("Hotel setup:");
-        System.Console.WriteLine("[1] Setup a new Hotel");
-        System.Console.WriteLine("[2] View current hotel");
-        System.Console.WriteLine("[3] Edit current Hotel");
-        System.Console.WriteLine("[4] FAQ");
-        System.Console.WriteLine("[5] Exit");
-        string? hsSelect = Console.ReadLine();
-        Debug.Assert(hsSelect != null);
-        switch (hsSelect)
+        bool setuprunning = true;
+        while (setuprunning)
         {
-            case "1":
-                System.Console.WriteLine("How many floors are the hotel?");
-                System.Console.WriteLine("Do now include the ground floor");
-                int floors = int.Parse(Console.ReadLine()!);
-                Hotel = new HotelRoom[floors][];
+            ClearText();
+            System.Console.WriteLine("Hotel setup:");
+            System.Console.WriteLine("[1] Setup a new Hotel");
+            System.Console.WriteLine("[2] View current hotel");
+            System.Console.WriteLine("[3] Edit current Hotel size");
+            System.Console.WriteLine("[4] FAQ");
+            System.Console.WriteLine("[5] Exit");
+            string? hsSelect = Console.ReadLine();
+            Debug.Assert(hsSelect != null);
+            switch (hsSelect)
+            {
+                case "1":
+                    ClearText();
+                    System.Console.WriteLine("How many floors are the hotel?");
+                    System.Console.WriteLine("including the ground floor");
+                    int floors = int.Parse(Console.ReadLine()!);
+                    Hotel = new HotelRoom[floors][];
 
-                for (int i = 0; i < Hotel.Length; i++)
-                {
-                    System.Console.WriteLine($"How many rooms do you want floor {i} to have?");
-                    int rooms = int.Parse(Console.ReadLine()!);
-                    
-                    Hotel[i] = new HotelRoom[rooms];
-                }
-                break;
-            case "2":
-                if(Hotel == null)
-                {
-                    System.Console.WriteLine("You have not created a hotel yet.");
+                    for (int i = 0; i < Hotel.Length; i++)
+                    {
+                        System.Console.WriteLine($"How many rooms do you want floor {i} to have?");
+                        int rooms = int.Parse(Console.ReadLine()!);
+
+                        Hotel[i] = new HotelRoom[rooms];
+                    }
+                    break;
+                case "2":
+                    ClearText();
+                    if (Hotel == null)
+                    {
+                        System.Console.WriteLine("You have not created a hotel yet.");
+                        Console.ReadLine();
+                    }
+                    else
+                    {
+                        for (int floor = 0; floor < Hotel.Length; floor++)
+                        {
+                            System.Console.WriteLine($"Floor {floor}: {Hotel[floor].Length} rooms");
+                        }
+                    }
+
                     Console.ReadLine();
-                }
-                else
-                {
-                for (int floor = 0; floor < Hotel.Length; floor++)
-                {
-                    System.Console.WriteLine($"Floor {floor}: {Hotel[floor].Length} rooms");   
-                }    
-                }
-                
-                Console.ReadLine();
-                break;
-            case "3":
-                break;
-            case "4":
-                break;
-            case "5":
-                break;
-            default:
-                break;
+                    break;
+                case "3":
+                    ClearText();
+                    if (Hotel == null)
+                    {
+                        System.Console.WriteLine("You have not created a hotel yet");
+                    }
+                    else
+                    {
+                        System.Console.WriteLine("Your current hotel size:");
+                        for (int i = 0; i < Hotel.Length; i++)
+                        {
+                            Console.WriteLine($"Floor number {i}, Rooms: {Hotel[i].Length}");
+
+                        }
+                        System.Console.WriteLine("What would you like to change:");
+                        System.Console.WriteLine("[1] number of floors");
+                        System.Console.WriteLine("[2] number of rooms on a floor");
+                        string? editSelect = Console.ReadLine();
+                        switch (editSelect)
+                        {
+                            case "1":
+                                ClearText();
+                                System.Console.WriteLine("How many floors do you want the hotel to have?");
+                                System.Console.WriteLine("Including the ground floor");
+                                int newfloors = int.Parse(Console.ReadLine()!);
+
+                                Hotel = new HotelRoom[newfloors][];
+
+                                for (int i = 0; i < Hotel.Length; i++)
+                                {
+                                    System.Console.WriteLine($"How many rooms do you want floor {i} to have?");
+                                    int rooms = int.Parse(Console.ReadLine()!);
+
+                                    Hotel[i] = new HotelRoom[rooms];
+                                }
+
+                                System.Console.WriteLine("Your new hotel:");
+
+                                for (int i = 0; i < Hotel.Length; i++)
+                                {
+                                    Console.WriteLine($"Floor number {i}, Rooms: {Hotel[i].Length}");
+
+                                }
+                                Console.ReadLine();
+                                break;
+                            case "2":
+                                ClearText();
+                                System.Console.WriteLine("Select the floor you want to edit:");
+                                int selectedFloor = int.Parse(Console.ReadLine()!);
+
+                                System.Console.WriteLine($"You have selected florr {selectedFloor}");
+                                System.Console.WriteLine($"This floor has {Hotel[selectedFloor].Length} rooms");
+                                System.Console.WriteLine("How many rooms do you want this floor to have?");
+                                int Rooms = int.Parse(Console.ReadLine()!);
+
+                                HotelRoom[] newRooms = new HotelRoom[Rooms];
+
+                                for (int i = 0; i < Math.Min(Rooms, Hotel[selectedFloor].Length); i++)
+                                {
+                                    newRooms[i] = Hotel[selectedFloor][i];
+                                }
+
+                                Hotel[selectedFloor] = newRooms;
+
+                                System.Console.WriteLine("Your new hotel:");
+
+                                for (int i = 0; i < Hotel.Length; i++)
+                                {
+                                    Console.WriteLine($"Floor number {i}, Rooms: {Hotel[i].Length}");
+
+                                }
+
+                                Console.ReadLine();
+
+                                break;
+                            default:
+                                ClearText();
+                                System.Console.WriteLine("Invalid input");
+                                Console.ReadLine();
+                                break;
+                        }
+
+                    }
+
+                    break;
+                case "4":
+                    break;
+                case "5":
+                    ClearText();
+                    setuprunning = false;
+                    System.Console.WriteLine("Press ENTER to continue");
+                    break;
+                default:
+                    ClearText();
+                    System.Console.WriteLine("Invalid input");
+                    Console.Write("Press ENTER to continue");
+                    Console.ReadLine();
+                    break;
+            }
         }
+
     }
 
+
+
+static void ClearText()
+{
+    try { Console.Clear(); } catch { }
 }
+
+}
+

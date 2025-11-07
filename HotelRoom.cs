@@ -8,6 +8,9 @@ class HotelRoom
     public int Price;
     public RoomStatus roomstatus;
 
+    
+    
+
     public HotelRoom(string roomname, int beds, int price, RoomStatus status)
     {
 
