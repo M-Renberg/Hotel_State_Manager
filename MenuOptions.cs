@@ -259,7 +259,7 @@ class MenuOptions
                                 System.Console.WriteLine("Select the floor you want to edit:");
                                 int selectedFloor = int.Parse(Console.ReadLine()!);
 
-                                System.Console.WriteLine($"You have selected florr {selectedFloor}");
+                                System.Console.WriteLine($"You have selected floor {selectedFloor}");
                                 System.Console.WriteLine($"This floor has {Hotel[selectedFloor].Length} rooms");
                                 System.Console.WriteLine("How many rooms do you want this floor to have?");
                                 int Rooms = int.Parse(Console.ReadLine()!);
