@@ -315,7 +315,8 @@ class MenuOptions
                                 roomname: $"{i}0{j}",
                                 beds: 1,
                                 price: 100,
-                                status: HotelRoom.RoomStatus.Available
+                                status: HotelRoom.RoomStatus.Available,
+                                typeofbed: HotelRoom.BedType.Twin
                                 );
                             }
                         }
@@ -337,6 +338,7 @@ class MenuOptions
                     System.Console.WriteLine("| Beds: 1                            |");
                     System.Console.WriteLine("| Price: 100                         |");
                     System.Console.WriteLine("| Room status: Available             |");
+                    System.Console.WriteLine("| Bed Type: Twin                     |");
                     System.Console.WriteLine("|                                    |");
                     System.Console.WriteLine("| A manager can edit this later      |");
                     System.Console.WriteLine("|                                    |");
