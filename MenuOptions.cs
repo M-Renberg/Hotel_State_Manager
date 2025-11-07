@@ -171,8 +171,9 @@ class MenuOptions
             System.Console.WriteLine("[1] Setup a new Hotel");
             System.Console.WriteLine("[2] View current hotel");
             System.Console.WriteLine("[3] Edit current Hotel size");
-            System.Console.WriteLine("[4] FAQ");
-            System.Console.WriteLine("[5] Exit");
+            System.Console.WriteLine("[4] Set default value on rooms");
+            System.Console.WriteLine("[5] FAQ");
+            System.Console.WriteLine("[6] Exit");
             string? hsSelect = Console.ReadLine();
             Debug.Assert(hsSelect != null);
             switch (hsSelect)
@@ -191,6 +192,9 @@ class MenuOptions
 
                         Hotel[i] = new HotelRoom[rooms];
                     }
+                    System.Console.WriteLine("Your hotel is now created");
+                    System.Console.Write("Press ENTER to continue");
+                    Console.ReadLine();
                     break;
                 case "2":
                     ClearText();
@@ -295,8 +299,53 @@ class MenuOptions
 
                     break;
                 case "4":
+                    ClearText();
+                    if(Hotel == null)
+                    {
+                        System.Console.WriteLine("You have not created a hotel yet.");
+                        Console.ReadLine();
+                    }
+                    else
+                    {
+                        for (int i = 0; i < Hotel.Length; i++)
+                        {
+                            for (int j = 0; j < Hotel[i].Length; j++)
+                            {
+                                Hotel[i][j] = new HotelRoom(
+                                roomname: $"{i}0{j}",
+                                beds: 1,
+                                price: 100,
+                                status: HotelRoom.RoomStatus.Available
+                                );
+                            }
+                        }
+                        System.Console.WriteLine("Your hotel rooms have now been set with default values");
+                        Console.ReadLine();
+                    }
                     break;
                 case "5":
+                    ClearText();
+                    System.Console.WriteLine("+------------------------------------+");
+                    System.Console.WriteLine("|                  FAQ               |");
+                    System.Console.WriteLine("+------------------------------------+");
+                    System.Console.WriteLine("|                                    |");
+                    System.Console.WriteLine("| Use the setup to start a new hotel |");
+                    System.Console.WriteLine("| After setup you can edit the hotel |");
+                    System.Console.WriteLine("|                                    |");
+                    System.Console.WriteLine("| The default values are:            |");
+                    System.Console.WriteLine("| Room name: floor nr + 0 + room nr  |");
+                    System.Console.WriteLine("| Beds: 1                            |");
+                    System.Console.WriteLine("| Price: 100                         |");
+                    System.Console.WriteLine("| Room status: Available             |");
+                    System.Console.WriteLine("|                                    |");
+                    System.Console.WriteLine("| A manager can edit this later      |");
+                    System.Console.WriteLine("|                                    |");
+                    System.Console.WriteLine("+------------------------------------+");
+                    System.Console.WriteLine(" ");
+                    Console.Write("Press ENTER to continue");
+                    Console.ReadLine();
+                    break;
+                case "6":
                     ClearText();
                     setuprunning = false;
                     System.Console.WriteLine("Press ENTER to continue");
