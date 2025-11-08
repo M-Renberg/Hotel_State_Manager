@@ -25,6 +25,7 @@ class HotelRoom
         Unavailable,
         Booked,
         Cleaning,
+        Renovation,
     }
     public enum BedType
     {
