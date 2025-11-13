@@ -6,6 +6,7 @@ FileHandler fh = new();
 MenuOptions menuOptions = new();
 HotelRoom[][] hotel = Array.Empty<HotelRoom[]>();
 BookingSystem bookingsys = new(hotel);
+HotelManagmentSystem hms = new();
 
 
 List<User> users = new();
@@ -71,12 +72,48 @@ while (running)
         {
             case EmployPermissions.Menu:
                 ClearText();
-                System.Console.WriteLine("Menu");
-                Console.ReadLine();
+                System.Console.WriteLine("+-----------------------+");
+                System.Console.WriteLine("|          Menu:        |");
+                System.Console.WriteLine("+-----------------------+");
+                System.Console.WriteLine("|                       |");
+                System.Console.WriteLine("|[1] Book room          |");
+                System.Console.WriteLine("|[2] Show booked rooms  |");
+                System.Console.WriteLine("|                       |");
+                System.Console.WriteLine("+-----------------------+");
+                switch (Console.ReadLine())
+                {
+                    case "1":
+                        bookingsys.RoomBooking();
+                        break;
+                    case "2":
+                        bookingsys.ShowBookings();
+                        break;
+                }
                 break;
             case EmployPermissions.Management:
                 ClearText();
-                System.Console.WriteLine("Management menu");
+                System.Console.WriteLine("+-----------------------+");
+                System.Console.WriteLine("|     Managment Menu:   |");
+                System.Console.WriteLine("+-----------------------+");
+                System.Console.WriteLine("|                       |");
+                System.Console.WriteLine("|[1] Book room          |");
+                System.Console.WriteLine("|[2] Show booked rooms  |");
+                System.Console.WriteLine("|[3] Hotel room manager |");
+                System.Console.WriteLine("+-----------------------+");
+                switch (Console.ReadLine())
+                {
+                    case "1":
+                        bookingsys.RoomBooking();
+                        break;
+                    case "2":
+                        bookingsys.ShowBookings();
+                        break;
+                    case "3":
+                        hms.RoomManagement(hotel);
+                        break;
+                    case "4":
+                        break;
+                }
                 Console.ReadLine();
                 break;
             case EmployPermissions.Admin:
