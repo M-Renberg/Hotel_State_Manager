@@ -2,7 +2,12 @@
 using System.Runtime.CompilerServices;
 using HSM;
 
+FileHandler fh = new();
 MenuOptions menuOptions = new();
+HotelRoom[][] hotel = Array.Empty<HotelRoom[]>();
+BookingSystem bookingsys = new(hotel);
+
+
 List<User> users = new();
 
 users.Add(new User("test", "test"));
@@ -16,6 +21,9 @@ bool running = true;
 
 while (running)
 {
+    fh.LoadBooking(ref bookingsys.Bookings);
+    bookingsys.Hotel = fh.LoadHotel();
+    fh.LoadUser(ref users);
     if (activeUser == null)
     {
         ClearText();
@@ -99,9 +107,15 @@ while (running)
                 Console.ReadLine();
                 break;
             case EmployPermissions.Logout:
+                fh.SaveBooking(ref bookingsys.Bookings);
+                fh.SaveHotel(bookingsys.Hotel);
+                fh.SaveUser(ref users);
                 activeUser = null;
                 break;
             case EmployPermissions.Quit:
+                fh.SaveBooking(ref bookingsys.Bookings);
+                fh.SaveHotel(bookingsys.Hotel);
+                fh.SaveUser(ref users);
                 running = false;
                 break;
             default:
